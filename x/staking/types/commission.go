@@ -7,6 +7,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
+var (
+	MinCommissionRate = sdk.NewDecWithPrec(25, 4)
+)
+
 type (
 	// Commission defines a commission parameters for a given validator.
 	Commission struct {
@@ -80,6 +84,10 @@ func (c CommissionRates) Validate() error {
 	case c.Rate.IsNegative():
 		// rate cannot be negative
 		return ErrCommissionNegative
+
+	case c.Rate.LT(MinCommissionRate):
+		// rate cannot be less than the min rate
+		return ErrCommissionLTMinRate
 
 	case c.Rate.GT(c.MaxRate):
 		// rate cannot be greater than the max rate

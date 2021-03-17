@@ -57,3 +57,7 @@ var (
 	ErrInvalidHistoricalInfo           = sdkerrors.Register(ModuleName, 44, "invalid historical info")
 	ErrNoHistoricalInfo                = sdkerrors.Register(ModuleName, 45, "no historical info found")
 )
+
+var (
+	ErrCommissionLTMinRate = sdkerrors.Register(ModuleName, 1001, "commission cannot be less than the min rate")
+)
