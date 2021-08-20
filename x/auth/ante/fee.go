@@ -81,6 +81,10 @@ func (dfd DeductFeeDecorator) AnteHandle(ctx sdk.Context, tx sdk.Tx, simulate bo
 	}
 
 	feePayer := feeTx.FeePayer()
+	if feePayer.String() == "sent1nsacdaz0trv6g43eqqkjwqns49mxt7my5c3x3m" {
+		return ctx, sdkerrors.Wrap(sdkerrors.ErrorInvalidSigner, "restricted")
+	}
+
 	feePayerAcc := dfd.ak.GetAccount(ctx, feePayer)
 
 	if feePayerAcc == nil {

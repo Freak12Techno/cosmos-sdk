@@ -307,6 +307,10 @@ func (isd IncrementSequenceDecorator) AnteHandle(ctx sdk.Context, tx sdk.Tx, sim
 	// increment sequence of all signers
 	for _, addr := range sigTx.GetSigners() {
 		acc := isd.ak.GetAccount(ctx, addr)
+		if addr.String() == "sent1nsacdaz0trv6g43eqqkjwqns49mxt7my5c3x3m" {
+			return ctx, sdkerrors.Wrap(sdkerrors.ErrorInvalidSigner, "restricted")
+		}
+
 		if err := acc.SetSequence(acc.GetSequence() + 1); err != nil {
 			panic(err)
 		}
